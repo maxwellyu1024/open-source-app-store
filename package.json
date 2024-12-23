@@ -80,25 +80,5 @@
     "vite": "^6.0.3",
     "prettier": "^3.0.0",
     "eslint-config-prettier": "^9.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "prettier"
-    ],
-    "plugins": [
-      "react",
-      "@typescript-eslint"
-    ],
-    "rules": {
-    }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "printWidth": 80
   }
 }

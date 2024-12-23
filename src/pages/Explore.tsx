@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { App } from '../types/App';
 
-const Explore = () => {
-  const [apps, setApps] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [filteredApps, setFilteredApps] = useState([]);
+const Explore: React.FC = () => {
+  const [apps, setApps] = useState<App[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [filteredApps, setFilteredApps] = useState<App[]>([]);
   const [searchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [minRating, setMinRating] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [minRating, setMinRating] = useState<number>(0);
 
   useEffect(() => {
     // 模拟从 API 加载数据
     fetch('/apps.json')
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: App[]) => {
         setApps(data);
         setCategories([...new Set(data.map((app) => app.category))]);
       });
@@ -30,6 +31,14 @@ const Explore = () => {
     );
     setFilteredApps(filtered);
   }, [apps, searchParams, selectedCategory, minRating]);
+
+  const toggleFavorite = (id: number) => {
+    setApps((prevApps) =>
+      prevApps.map((app) =>
+        app.id === id ? { ...app, isFavorite: !app.isFavorite } : app
+      )
+    );
+  };
 
   return (
     <div className="flex">
@@ -60,9 +69,9 @@ const Explore = () => {
         <h3 className="text-lg font-bold mt-6 mb-4">Filter by Rating</h3>
         <input
           type="range"
-          min="0"
-          max="5"
-          step="0.1"
+          min={0}
+          max={5}
+          step={0.1}
           value={minRating}
           onChange={(e) => setMinRating(parseFloat(e.target.value))}
           className="w-full"
@@ -73,7 +82,7 @@ const Explore = () => {
       {/* 主内容区域 */}
       <main className="w-3/4 p-4">
         <h2 className="text-xl font-bold mb-4">Explore Apps</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {filteredApps.length ? (
             filteredApps.map((app) => (
               <div key={app.id} className="p-4 border border-gray-300 rounded shadow">
@@ -81,6 +90,19 @@ const Explore = () => {
                 <p className="text-sm text-gray-600">{app.category}</p>
                 <p className="text-sm text-gray-500">{app.description}</p>
                 <p className="text-sm text-yellow-500">Rating: {app.rating}</p>
+                <p className="text-sm text-gray-500">Downloads: {app.downloads}</p>
+                <button
+                  onClick={() => toggleFavorite(app.id)}
+                  className={`mt-2 px-4 py-2 rounded ${app.isFavorite ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  {app.isFavorite ? 'Unfavorite' : 'Favorite'}
+                </button>
+                <Link
+                  to={`/app/${app.id}`}
+                  className="block mt-2 text-blue-500 hover:underline"
+                >
+                  View Details
+                </Link>
               </div>
             ))
           ) : (

@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
-import { App } from '../types/App';
+import React, { useEffect, useState } from 'react'
+import { useSearchParams, Link } from 'react-router-dom'
+import { App } from '../types/App'
 
 const Explore: React.FC = () => {
-  const [apps, setApps] = useState<App[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [filteredApps, setFilteredApps] = useState<App[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('search') || '');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [minRating, setMinRating] = useState<number>(0);
+  const [apps, setApps] = useState<App[]>([])
+  const [categories, setCategories] = useState<string[]>([])
+  const [filteredApps, setFilteredApps] = useState<App[]>([])
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchParams.get('search') || '',
+  )
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [minRating, setMinRating] = useState<number>(0)
 
   useEffect(() => {
     // 模拟从 API 加载数据
     fetch('/apps.json')
       .then((res) => res.json())
       .then((data: App[]) => {
-        setApps(data);
-        setCategories([...new Set(data.map((app) => app.category))]);
-      });
-  }, []);
+        setApps(data)
+        setCategories([...new Set(data.map((app) => app.category))])
+      })
+  }, [])
 
   useEffect(() => {
     // 搜索和过滤逻辑
@@ -27,23 +29,23 @@ const Explore: React.FC = () => {
       (app) =>
         app.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         (!selectedCategory || app.category === selectedCategory) &&
-        app.rating >= minRating
-    );
-    setFilteredApps(filtered);
-  }, [apps, searchQuery, selectedCategory, minRating]);
+        app.rating >= minRating,
+    )
+    setFilteredApps(filtered)
+  }, [apps, searchQuery, selectedCategory, minRating])
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSearchParams({ search: searchQuery });
-  };
+    e.preventDefault()
+    setSearchParams({ search: searchQuery })
+  }
 
   const toggleFavorite = (id: number) => {
     setApps((prevApps) =>
       prevApps.map((app) =>
-        app.id === id ? { ...app, isFavorite: !app.isFavorite } : app
-      )
-    );
-  };
+        app.id === id ? { ...app, isFavorite: !app.isFavorite } : app,
+      ),
+    )
+  }
 
   return (
     <div className="flex">
@@ -96,7 +98,10 @@ const Explore: React.FC = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="p-2 border border-gray-300 rounded"
             />
-            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
               Search
             </button>
           </form>
@@ -105,12 +110,17 @@ const Explore: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredApps.length ? (
             filteredApps.map((app) => (
-              <div key={app.id} className="p-4 border border-gray-300 rounded shadow">
+              <div
+                key={app.id}
+                className="p-4 border border-gray-300 rounded shadow"
+              >
                 <h3 className="text-lg font-bold">{app.name}</h3>
                 <p className="text-sm text-gray-600">{app.category}</p>
                 <p className="text-sm text-gray-500">{app.description}</p>
                 <p className="text-sm text-yellow-500">Rating: {app.rating}</p>
-                <p className="text-sm text-gray-500">Downloads: {app.downloads}</p>
+                <p className="text-sm text-gray-500">
+                  Downloads: {app.downloads}
+                </p>
                 <button
                   onClick={() => toggleFavorite(app.id)}
                   className={`mt-2 px-4 py-2 rounded ${app.isFavorite ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-700'}`}
@@ -131,7 +141,7 @@ const Explore: React.FC = () => {
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Explore;
+export default Explore

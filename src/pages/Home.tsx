@@ -1,17 +1,15 @@
-import Hero from '../components/Hero';
-import SearchSection from '../components/SearchSection';
-import Features from '../components/Features';
-import Community from '../components/Community';
+import Hero from '../components/Hero'
+import SearchSection from '../components/SearchSection'
+import Features from '../components/Features'
+import Community from '../components/Community'
 
 const Home = () => (
   <>
-   
-   <Hero />
+    <Hero />
     <SearchSection />
     <Features />
     <Community />
-  
   </>
-);
+)
 
-export default Home;
+export default Home

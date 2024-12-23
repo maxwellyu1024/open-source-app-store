@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const Community = () => (
   <section className="p-6 bg-white">
     <h2 className="text-2xl font-bold text-center mb-4">Join the Community</h2>
     <p className="text-gray-600 text-center mb-6">
-      Become part of our vibrant open-source community. Share your ideas, contribute to projects, and grow together.
+      Become part of our vibrant open-source community. Share your ideas,
+      contribute to projects, and grow together.
     </p>
-   
 
     <div className="flex justify-center space-x-4">
       <Link
@@ -29,6 +29,6 @@ const Community = () => (
       </Link>
     </div>
   </section>
-);
+)
 
-export default Community;
+export default Community

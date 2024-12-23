@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "Open Source Browser",
+        "category": "Productivity",
+        "description": "A privacy-first web browser.",
+        "rating": 4.5
+    },
+    {
+        "id": 2,
+        "name": "Code Editor",
+        "category": "Development",
+        "description": "A lightweight and powerful code editor.",
+        "rating": 4.8
+    },
+    {
+        "id": 3,
+        "name": "Music Player",
+        "category": "Entertainment",
+        "description": "Stream your favorite songs offline.",
+        "rating": 4.2
+    },
+    {
+        "id": 4,
+        "name": "Photo Editor",
+        "category": "Photography",
+        "description": "Edit your photos with ease.",
+        "rating": 4.6
+    },
+    {
+        "id": 5,
+        "name": "Video Editor",
+        "category": "Photography",
+        "description": "Edit your videos with ease.",
+        "rating": 3.6
+    },
+    {
+        "id": 6,
+        "name": "Social Media",
+        "category": "Social",
+        "description": "Connect with friends and family.",
+        "rating": 4.7
+    },
+    {
+        "id": 7,
+        "name": "Weather App",
+        "category": "Weather",
+        "description": "Check the weather in your area.",
+        "rating": 5.0
+    },
+    {
+        "id": 8,
+        "name": "Calendar App",
+        "category": "Productivity",
+        "description": "Keep track of your events.",
+        "rating": 4.6
+    },
+    {
+        "id": 9,
+        "name": "News App",
+        "category": "News",
+        "description": "Stay updated with the latest news.",
+        "rating": 4.1
+    },
+    {
+        "id": 10,
+        "name": "Fitness App",
+        "category": "Health",
+        "description": "Stay fit and healthy.",
+        "rating": 4.6
+    }
+]

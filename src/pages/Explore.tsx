@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { App } from '../types/App';
 
 const Explore: React.FC = () => {
@@ -10,7 +10,6 @@ const Explore: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [minRating, setMinRating] = useState<number>(0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // 模拟从 API 加载数据

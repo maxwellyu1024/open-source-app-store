@@ -25,7 +25,7 @@ const Contact = () => (
           <label className="block text-gray-700 mb-2">Message</label>
           <textarea
             className="w-full p-3 border rounded"
-            rows="5"
+            rows={5}
             placeholder="Enter your message"
           ></textarea>
         </div>

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { App } from '../types/App';
 
 const Explore: React.FC = () => {
   const [apps, setApps] = useState<App[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [filteredApps, setFilteredApps] = useState<App[]>([]);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [minRating, setMinRating] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 模拟从 API 加载数据
@@ -22,7 +24,6 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     // 搜索和过滤逻辑
-    const searchQuery = searchParams.get('search') || '';
     const filtered = apps.filter(
       (app) =>
         app.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -30,7 +31,12 @@ const Explore: React.FC = () => {
         app.rating >= minRating
     );
     setFilteredApps(filtered);
-  }, [apps, searchParams, selectedCategory, minRating]);
+  }, [apps, searchQuery, selectedCategory, minRating]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearchParams({ search: searchQuery });
+  };
 
   const toggleFavorite = (id: number) => {
     setApps((prevApps) =>
@@ -81,8 +87,23 @@ const Explore: React.FC = () => {
 
       {/* 主内容区域 */}
       <main className="w-3/4 p-4">
-        <h2 className="text-xl font-bold mb-4">Explore Apps</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Explore Apps</h2>
+          <form onSubmit={handleSearch} className="flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="Search for apps..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
+            />
+            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+              Search
+            </button>
+          </form>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredApps.length ? (
             filteredApps.map((app) => (
               <div key={app.id} className="p-4 border border-gray-300 rounded shadow">
